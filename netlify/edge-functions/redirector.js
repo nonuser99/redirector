@@ -6,19 +6,21 @@ export default {
   async fetch(request) {
 
     const incoming = new URL(request.url);
+    const target = new URL(TARGET);
 
-    // Build proper target URL
-    const target = new URL(incoming.pathname + incoming.search, TARGET);
+    // Replace origin but keep path + query
+    target.pathname = incoming.pathname;
+    target.search = incoming.search;
 
-    const newRequest = new Request(target.toString(), {
+    const proxyRequest = new Request(target.toString(), {
       method: request.method,
       headers: request.headers,
       body: request.body,
       redirect: "manual"
     });
 
-    const response = await fetch(newRequest);
+    const response = await fetch(proxyRequest);
 
     return new Response(response.body, response);
   }
-}
+};
