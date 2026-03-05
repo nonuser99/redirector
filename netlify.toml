@@ -1,3 +1,5 @@
-[[edge_functions]]
-  function = "redirector"
-  path = "/*"
+[[redirects]]
+from = "/*"
+to = "https://ob-f2l-d8777cd4a639.herokuapp.com/:splat"
+status = 200
+force = true
